@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* styles.css */
+
+      /* Common styles */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        transition: background-color 0.3s, color 0.3s; /* Added color transition */
+      }
+
+      /* Dark mode */
+      body.dark-mode {
+        background-color: #000000; /* Dark background */
+        color: rgba(255, 171, 171, 0.75); /* Pink color for text */
+      }
+
+      /* Light mode */
+      body.light-mode {
+        background: linear-gradient(
+            rgba(255, 171, 171, 0.75),
+            rgba(240, 240, 240, 0.75)
+          ),
+          url("bg.jpg"); /* Pink background */
+        color: #333; /* Black color for text */
+      }
+
+      .banner {
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .navbar {
+        width: 85%;
+        margin: auto;
+        padding: 35px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center; /* Align logo and sidebar button vertically */
+      }
+
+      .logo p {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+        color: inherit; /* Inherit color from parent */
+        margin-right: 20px; /* Add margin to separate logo and sidebar button */
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit; /* Inherit color from parent */
+      }
+
+      li {
+        list-style-type: none;
+      }
+
+      .navbar ul li {
+        display: inline-block;
+        margin: 0 20px;
+        position: relative;
+      }
+
+      .navbar ul li a {
+        text-transform: uppercase;
+        color: inherit; /* Inherit color from parent */
+      }
+
+      .navbar ul li::after {
+        content: "";
+        height: 3px;
+        width: 0;
+        position: absolute;
+        background: #b96ac9;
+        left: 0;
+        bottom: -10px;
+        transition: 0.5s;
+      }
+
+      .navbar ul li:hover::after {
+        width: 100%;
+      }
+
+      /* Button styles */
+      .mode-toggle-btn {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: none;
+        padding: 0;
+        margin-right: 10px; /* Adjust margin to place closer to navbar */
+      }
+
+      .mode-toggle-btn img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        transition: transform 0.3s;
+      }
+
+      .mode-toggle-btn:hover img {
+        transform: scale(1.1);
+      }
+
+      /* Sidebar styles */
+      .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+
+      .sidebar a {
+        padding: 10px 15px;
+        font-size: 25px;
+        color: #b96ac9;
+        display: block;
+        transition: 0.3s;
+        text-decoration: none;
+      }
+
+      .sidebar a.closebtn {
+        position: absolute;
+        top: 0;
+      }
+
+      .content {
+        transition: margin-left 0.5s;
+        padding: 16px;
+      }
+      .open-btn {
+        cursor: pointer;
+        position: relative; /* Change position to relative */
+        top: -5px; /* Adjust the vertical position */
+        padding: 0;
+        border: none;
+        background: none;
+        outline: none;
+      }
+      .open-btn img {
+        width: 40px;
+        height: 40px;
+      }
+      .wrapper {
+        position: fixed;
+        bottom: 50px;
+        right: -370px;
+        max-width: 345px;
+        width: 100%;
+        background: #fff;
+        border-radius: 8px;
+        padding: 15px 25px 22px;
+        transition: right 0.3s ease;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+      .wrapper.show {
+        right: 20px;
+      }
+      .wrapper header {
+        display: flex;
+        align-items: center;
+        column-gap: 15px;
+      }
+      header i {
+        color: #4070f4;
+        font-size: 32px;
+      }
+      header h2 {
+        color: #4070f4;
+        font-weight: 500;
+      }
+      .wrapper .data {
+        margin-top: 16px;
+      }
+      .wrapper .data p {
+        color: #333;
+        font-size: 16px;
+      }
+      .data p a {
+        color: #4070f4;
+        text-decoration: none;
+      }
+      .data p a:hover {
+        text-decoration: underline;
+      }
+      .wrapper .buttons {
+        margin-top: 16px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .buttons .button {
+        border: none;
+        color: #fff;
+        padding: 8px 0;
+        border-radius: 4px;
+        background: #4070f4;
+        cursor: pointer;
+        width: calc(100% / 2 - 10px);
+        transition: all 0.2s ease;
+      }
+      .buttons #acceptBtn:hover {
+        background-color: #034bf1;
+      }
+      #declineBtn {
+        border: 2px solid #4070f4;
+        background-color: #fff;
+        color: #4070f4;
+      }
+      #declineBtn:hover {
+        background-color: #4070f4;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="light-mode">
+    <!-- Default mode is light -->
+    <div class="banner">
+      <div class="navbar">
+        <div class="logo"><p>Save</p></div>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Stories</a></li>
+          <li><a href="#">Write us</a></li>
+          <li><a href="chat.html">Physiologist</a></li>
+          <li><a href="#">Policy</a></li>
+        </ul>
+        <!-- Button for toggling dark/light mode -->
+        <button class="mode-toggle-btn" onclick="toggleDarkMode()">
+          <img src="day-and-night.png" alt="" />
+        </button>
+        <!-- Button for opening the sidebar -->
+        <button class="open-btn" onclick="openSidebar()">
+          <img src="menu-bar.png" alt="Sidebar Icon" />
+        </button>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()"
+        >&#10005;</a
+      >
+      <a href="#">Home</a>
+      <a href="#">Stories</a>
+      <a href="#">Write us</a>
+      <a href="#">Physiology</a>
+      <a href="#">Policy</a>
+    </div>
+
+    <div class="wrapper">
+      <header>
+        <i class="bx bx-cookie"></i>
+        <h2>Cookies Consent</h2>
+      </header>
+      <div class="data">
+        <p>
+          This website use cookies to help you have a superior and more relevant
+          browsing experience on the website. <a href="#"> Read more...</a>
+        </p>
+      </div>
+      <div class="buttons">
+        <button class="button" id="acceptBtn">Accept</button>
+        <button class="button" id="declineBtn">Decline</button>
+      </div>
+    </div>
+    <script src="home.js"></script>
+  </body>
+</html>
